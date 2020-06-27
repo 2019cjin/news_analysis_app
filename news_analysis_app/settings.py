@@ -77,8 +77,8 @@ DATABASES = {
     'default': {
         'NAME': 'newsheadlinesdata',
         'ENGINE': 'django.db.backends.mysql',
-        'USER': 'root',
-        'PASSWORD': 'root'
+        'USER': '',
+        'PASSWORD': ''
     }
 }
 
