@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <body>
+    <p>
+        {% if news_list %}
+            <ul>
+            {% for news in news_list %}
+                <li><a href="{{ news.url }}">{{ news.name }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Unable to show list of news sources!</p>
+        {% endif %}
+    </p>
+  </body>
+</html>

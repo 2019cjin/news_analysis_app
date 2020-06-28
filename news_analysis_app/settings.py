@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'headlines.apps.HeadlinesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,8 +78,8 @@ DATABASES = {
     'default': {
         'NAME': 'newsheadlinesdata',
         'ENGINE': 'django.db.backends.mysql',
-        'USER': '',
-        'PASSWORD': ''
+        'USER': 'root',
+        'PASSWORD': 'root'
     }
 }
 
