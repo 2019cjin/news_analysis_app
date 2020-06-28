@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from .config import DATABASE_INFO
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -78,8 +79,8 @@ DATABASES = {
     'default': {
         'NAME': 'NewsHeadlinesData',
         'ENGINE': 'django.db.backends.mysql',
-        'USER': 'cjin',
-        'PASSWORD': 'mysql2020',
+        'USER': DATABASE_INFO['user'],
+        'PASSWORD': DATABASE_INFO['password'],
         'HOST': '127.0.0.1'
     }
 }
