@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'headlines.apps.HeadlinesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,10 +76,11 @@ WSGI_APPLICATION = 'news_analysis_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'NAME': 'newsheadlinesdata',
+        'NAME': 'NewsHeadlinesData',
         'ENGINE': 'django.db.backends.mysql',
-        'USER': '',
-        'PASSWORD': ''
+        'USER': 'cjin',
+        'PASSWORD': 'mysql2020',
+        'HOST': '127.0.0.1'
     }
 }
 
