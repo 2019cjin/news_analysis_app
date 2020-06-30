@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sentiment Analysis</title>
+	<script src="{% static 'headlines/chart_generator.js' %}"></script>
+</head>
+<body>
+	<h1>Sentiment Analysis</h1>
+	<div>
+		<button id="button1">Generate Graph</button>
+		<div>
+			{% for key in mydata%}
+				<input type="checkbox" id = "checkbox_{{key}}" name="{{key}}">
+				<label for="{{key}}">{{key}}</label>
+			{% endfor %}
+		</div>
+	</div>
+	
+
+	<canvas id = "chart1"></canvas>
+	<script>
+		var ctx = document.getElementById('chart1').getContext('2d');
+		var button1 = document.getElementById('button1');
+
+		button1.onclick = function() {myFunction(ctx)};
+
+		function myFunction(ctx){
+			var datasets = {{mydata|safe}};
+			var colors = ['red', 'orange', 'green', 'blue', 'purple'];
+			var bar_inputs = [];
+			var idx = 0;
+
+			for(var key in datasets){
+				var isChecked = document.getElementById('checkbox_' + key).checked
+
+				if (isChecked){
+					var input = {
+						label: key,
+						backgroundColor: colors[idx],
+						borderColor: colors[idx],
+						data: datasets[key]
+					};
+					bar_inputs.push(input);
+				}
+
+				idx +=1;
+			}
+
+			var chart = new Chart(ctx, {
+				//the type of chart we want to create
+				type : 'bar',
+
+				//the data
+				data:{
+					labels: {{mylabels|safe}},
+					datasets : bar_inputs
+				},
+
+				//config options
+				options: {
+					title:{
+						display: true,
+						text: 'Percentage of Headlines in Each Sentiment Category'
+					},
+					scales:{
+						xAxes:[{
+							scaleLabel:{
+								display: true,
+								labelString: 'News Source'
+							}
+						}],
+						yAxes:[{
+							scaleLabel:{
+								display: true,
+								labelString: 'Percent'
+							}
+						}]
+					}
+				}
+			});
+		}
+	</script>
+</body>
+</html>
