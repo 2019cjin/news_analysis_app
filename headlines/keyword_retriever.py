@@ -18,6 +18,10 @@ class KeywordRetriever(object):
 
 		return d
 
+	def get_keywords(self):
+		"""Returns a list of keywords"""
+		return list(self.keyword_headlines().keys())
+		
 	def keyword_frequencies(self):
 		"""Returns a list of lists [word, number of headlines]"""
 		key_head = self.keyword_headlines()

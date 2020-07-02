@@ -4,28 +4,30 @@
 <head>
 	<title>Keyword {{kw}}</title>
 	<script src="{% static 'headlines/autocomplete_generator.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'headlines/autocomplete.css' %}">
+
 </head>
 <body>
-	<div>
+	<div class="autocomplete">
 		<input type="text" id="keywordBox" placeholder="Keyword">
 		<button id="button1">Submit</button>
 	</div>
 	<ol>
-		{% for datum in mydata %}
+		{% for datum in headlines %}
 			<li>{{datum}}</li>
 		{% endfor %}
 	</ol>
 	<script>
 		var button1 = document.getElementById("button1");
 		var textbox = document.getElementById("keywordBox");
+		autocomplete(textbox, {{kws|safe}});
 
 		var url =  "{% url 'headlines:keyword' 'foobar' %}";
-		button1.addEventListener("click", function(){open_url(textbox, url)});
+		button1.addEventListener("click", function(){open_url_html(textbox, url)});
 
-		function open_url(textbox, url_ref) {
-			var word = textbox.value;
-			var new_url = url_ref.replace("foobar", word);
-			window.open(new_url);
+		function open_url_html(textbox, url_ref) {
+			//alert("From html file!")
+			open_url(textbox, url_ref);
 		}
 	</script>
 </body>

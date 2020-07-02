@@ -27,8 +27,10 @@ def keyword_cloud(request):
 def headline_display(request, word):
 	try:
 		keyword_retriever = KeywordRetriever()
-		info = keyword_retriever.get_headlines_with_keyword(word)
+		headlines = keyword_retriever.get_headlines_with_keyword(word)
+		keywords = keyword_retriever.get_keywords()
 	except:
 		raise Http404("Keyword does not exist!")
 	
-	return render(request, 'headlines/display_headlines.html', {'kw': word, 'mydata':info})
+	context = {'kw': word, 'headlines':headlines, 'kws': keywords}
+	return render(request, 'headlines/display_headlines.html', context)
