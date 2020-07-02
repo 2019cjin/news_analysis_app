@@ -1,0 +1,32 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Keyword Cloud</title>
+	<script src="{% static 'headlines/wordcloud_generator.js' %}"></script>
+</head>
+<body>
+	<h1>Keyword Cloud</h1>
+	<p id = "keywordtext"></p>
+	<canvas id="cloud1" width="1200" height="700"></canvas>
+	<script>
+		WordCloud(document.getElementById('cloud1'), 
+			{list: {{mydata|safe}},
+			 gridSize: 8,
+			 shape: 'square',
+			 hover: hover_over,
+			 click: click_trigger
+			});
+
+		function click_trigger(item, dimension, event) {
+			var url = "{% url 'headlines:keyword' 'foobar' %}".replace("foobar", item[0]);
+			window.open(url);
+		}
+
+		function hover_over(item, dimension, event){
+
+			document.getElementById("keywordtext").innerHTML = "Keyword is " + item[0];
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Keyword {{kw}}</title>
+	<script src="{% static 'headlines/autocomplete_generator.js' %}" type="text/javascript"></script>
+</head>
+<body>
+	<div>
+		<input type="text" id="keywordBox" placeholder="Keyword">
+		<button id="button1">Submit</button>
+	</div>
+	
+	<ol>
+		{% for datum in mydata %}
+			<li>{{datum}}</li>
+		{% endfor %}
+	</ol>
+	<script>
+		var button1 = document.getElementById("button1");
+		var textbox = document.getElementById("keywordBox");
+		var url =  "{% url 'headlines:keyword' 'foobar' %}";
+		button1.addEventListener("click", function(){open_url(textbox, url)});
+	</script>
+</body>
+</html>

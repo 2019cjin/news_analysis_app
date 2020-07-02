@@ -133,7 +133,8 @@ class Headline(models.Model):
 
 class Headlinekeyword(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    headlineid = models.ForeignKey(Headline, models.DO_NOTHING, db_column='HeadlineId')  # Field name made lowercase.
+    headlineid = models.ForeignKey('Headline', models.DO_NOTHING, db_column='HeadlineId')  # Field name made lowercase.
+    
     keywordid = models.ForeignKey('Keyword', models.DO_NOTHING, db_column='KeywordId')  # Field name made lowercase.
 
     class Meta:
