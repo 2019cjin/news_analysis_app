@@ -17,3 +17,8 @@ python manage.py runserver
 ## Resources:
 https://docs.djangoproject.com/en/3.0/intro/tutorial01/
 https://docs.djangoproject.com/en/3.0/howto/legacy-databases/
+
+## Javascript Files Used:
+https://www.chartjs.org/docs/latest/
+https://github.com/timdream/wordcloud2.js
+https://www.w3schools.com/howto/howto_js_autocomplete.asp
