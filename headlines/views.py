@@ -27,7 +27,8 @@ def keyword_cloud(request):
 def headline_display(request, word):
 	try:
 		keyword_retriever = KeywordRetriever()
-		headlines = keyword_retriever.get_headlines_with_keyword(word)
+		inp = None if word=="ALL" else word
+		headlines = keyword_retriever.get_headlines(kw = inp)
 		keywords = keyword_retriever.get_keywords()
 	except:
 		raise Http404("Keyword does not exist!")

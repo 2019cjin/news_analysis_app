@@ -32,6 +32,23 @@ class KeywordRetriever(object):
 
 		return freq_list
 
+	def get_headlines(self, kw = None):
+		"""Returns a list of headlines if given a keyword"""
+		if kw:
+			return self.get_headlines_with_keyword(kw)
+		else:
+			return self.get_all_headlines()
+
+	def get_all_headlines(self):
+		"""Returns a list of all headlines"""
+		list_vals = list(self.keyword_headlines().values())
+		uniq_headlines = set()
+		for list_val in list_vals:
+			for headlineobj in list_val:
+				uniq_headlines.add(headlineobj.headlineid.content)
+
+		return list(uniq_headlines)
+
 	def get_headlines_with_keyword(self, kw):
 		"""Returns a list of the headlines with the corresponding keyword"""
 		key_head = self.keyword_headlines()
