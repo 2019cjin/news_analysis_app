@@ -29,7 +29,7 @@
             <li><a href=".">Our Process <span class="sr-only">(current)</span></a></li>
             <li><a href="../about">About Us</a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Charts <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#">Sentiment Analysis Comparison</a></li>
                 <li><a href="#">Hot Topics Word Cloud</a></li>
@@ -49,7 +49,9 @@
     </nav>
 
     <div class="container-fluid">
-        <h2>Our Process</h2>
+        <div class="page-header">
+            <h2>Our Process</h2>
+        </div>
 
         <p>We used the following steps to analyze headlines: (1) scrape & clean, (2) analyze text, (3) store data, (4) visualize data</p>
 
@@ -58,8 +60,10 @@
             <li>Data analysis tool: <a href="https://github.com/cjin2019/News_Data_Analysis">https://github.com/cjin2019/News_Data_Analysis</a></li>
             <li>Website: <a href="https://github.com/2019cjin/news_analysis_app">https://github.com/2019cjin/news_analysis_app</a></li>
         </ul>
-       
-        <h4>1. Scraping and Cleaning Data</h4>
+
+        <hr>
+
+        <h4><b>1. Scraping and Cleaning Data</b></h4>
 
         <p>We scraped headlines from the homepages of the following news sources:
 
@@ -78,7 +82,9 @@
 
         <p>Every day at 10:00 AM EST, an automated script grabbed the html from the homepages of the news sources using the python requests package. We then used the BeautifulSoup package to parse the HTML and extract the headlines. How we parsed the HTML was customized for each news sources.</p>
 
-        <h4>2. Analyze Text</h4>
+        <br>
+
+        <h4><b>2. Analyze Text</b></h4>
 
         <p>For each headline we extracted the following pieces of information:</p>
 
@@ -89,7 +95,9 @@
         <p>2. Key words</p>
         <p>We used the spacy package's entity retriever to find keywords based on nouns and adjectives in the headline. Due to our method not using verbs to find keywords, our tools may have missed certain words that should be classified as key words.</p>
 
-        <h4>3. Storing Data</h4>
+        <br>
+        
+        <h4><b>3. Storing Data</b></h4>
         <p>
         The data we gathered each day was stored in a MySQL database. We decided to store data in a MySQL database so that we could observe trends in headlines over time. Information we stored in the database include: 
         <ul>
@@ -100,10 +108,13 @@
         </ul>
         </p>
 
-        <h4>4. Visualing Data</h4>
+        <br>
+
+        <h4><b>4. Visualing Data</b></h4>
 
         <p>chart.js and wordcloud2.js packages were used to display the charts and word cloud on this app. The SQL queries used to get data from the MySQL database were generated using Django's models.Model class.</p>
 
+        <br>
     </div>
 
 
