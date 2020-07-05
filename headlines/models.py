@@ -18,7 +18,7 @@ class Headline(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'headline'
+        db_table = 'Headline'
 
 
 class Headlinekeyword(models.Model):
@@ -28,7 +28,7 @@ class Headlinekeyword(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'headlinekeyword'
+        db_table = 'HeadlineKeyword'
 
 
 class Keyword(models.Model):
@@ -37,7 +37,7 @@ class Keyword(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'keyword'
+        db_table = 'Keyword'
 
 
 class Newssource(models.Model):
@@ -47,4 +47,5 @@ class Newssource(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'newssource'
+        
+        db_table = 'NewsSource'

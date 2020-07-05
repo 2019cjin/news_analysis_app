@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from .config import DATABASE_INFO
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -76,10 +77,11 @@ WSGI_APPLICATION = 'news_analysis_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'NAME': 'newsheadlinesdata',
+        'NAME': DATABASE_INFO['database_name'],
         'ENGINE': 'django.db.backends.mysql',
-        'USER': 'root',
-        'PASSWORD': 'root'
+        'USER': DATABASE_INFO['user'],
+        'PASSWORD': DATABASE_INFO['password'],
+        'HOST': DATABASE_INFO['host']
     }
 }
 
