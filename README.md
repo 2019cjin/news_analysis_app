@@ -22,3 +22,5 @@ https://docs.djangoproject.com/en/3.0/howto/legacy-databases/
 https://www.chartjs.org/docs/latest/
 https://github.com/timdream/wordcloud2.js
 https://www.w3schools.com/howto/howto_js_autocomplete.asp
+https://simpleisbetterthancomplex.com/tutorial/2018/08/13/how-to-use-bootstrap-4-forms-with-django.html
+https://getbootstrap.com/docs/3.4/components/#navbar

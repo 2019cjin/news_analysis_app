@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>About Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'headlines:index' %}">Newslytics</a>
+        </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="{% url 'headlines:process' %}">Our Process <span class="sr-only">(current)</span></a></li>
+            <li><a href="{% url 'headlines:about' %}">About Us</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'headlines:sentiment' %}">Sentiment Analysis Comparison</a></li>
+                <li><a href="{% url 'headlines:keyword_cloud' %}">Hot Topics Word Cloud</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Search Topics</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    
+
+    <div class="container-fluid">
+        <div class="page-header">
+            <h2>Our Process</h2>
+        </div>
+
+        <p>We used the following steps to analyze headlines: (1) scrape & clean, (2) analyze text, (3) store data, (4) visualize data</p>
+
+        <p>Source code for our project:</p>
+        <ul>
+            <li>Data analysis tool: <a href="https://github.com/cjin2019/News_Data_Analysis">https://github.com/cjin2019/News_Data_Analysis</a></li>
+            <li>Website: <a href="https://github.com/2019cjin/news_analysis_app">https://github.com/2019cjin/news_analysis_app</a></li>
+        </ul>
+
+        <hr>
+
+        <h4><b>1. Scraping and Cleaning Data</b></h4>
+
+        <p>We scraped headlines from the homepages of the following news sources:
+
+            {% if news_list %}
+                <ul>
+                {% for news in news_list %}
+                    <li><a href="{{ news.url }}">{{ news.name }}</a></li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>Unable to show list of news sources!</p>
+            {% endif %}
+
+            We chose to used headlines from the homepages because we believe that the news sources treat these headlines as the most important stories. We decided to analyze just text from headlines to simplify our project. In the future, we may look into analyzing text from articles.
+        </p>
+
+        <p>Every day at 10:00 AM EST, an automated script grabbed the html from the homepages of the news sources using the python requests package. We then used the BeautifulSoup package to parse the HTML and extract the headlines. How we parsed the HTML was customized for each news sources.</p>
+
+        <br>
+
+        <h4><b>2. Analyze Text</b></h4>
+
+        <p>For each headline we extracted the following pieces of information:</p>
+
+        <p>1. Sentiment value - how negative or positive a text is</p>
+        <p>To determine each sentiment value of each headline, we first determined the number of positive, negative, and neutral words. To determine the number of positive, negative, and neutral words, we used the Vader and Liu & Hu methodologies. We then used the following formula to determine the sentiment value</p>
+        <p>sentiment value = (# positive words)/(# total words) - (# nonpositive words)/(# total words)</p>
+
+        <p>2. Key words</p>
+        <p>We used the spacy package's entity retriever to find keywords based on nouns and adjectives in the headline. Due to our method not using verbs to find keywords, our tools may have missed certain words that should be classified as key words.</p>
+
+        <br>
+        
+        <h4><b>3. Storing Data</b></h4>
+        <p>
+        The data we gathered each day was stored in a MySQL database. We decided to store data in a MySQL database so that we could observe trends in headlines over time. Information we stored in the database include: 
+        <ul>
+            <li>headline text</li>
+            <li>keywords found in each headline</li>
+            <li>sentiment value of each headline</li>
+            <li>date when headline was gathered</li>
+        </ul>
+        </p>
+
+        <br>
+
+        <h4><b>4. Visualing Data</b></h4>
+
+        <p>chart.js and wordcloud2.js packages were used to display the charts and word cloud on this app. The SQL queries used to get data from the MySQL database were generated using Django's models.Model class.</p>
+
+        <br>
+    </div>
+
+
+    <div class = "text-center">
+        <p></p>
+        <p>Copyright 2020 ©  All rights reserved. Don't Copy our CODE</p>
+    </div>
+  </body>
+</html>

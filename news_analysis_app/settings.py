@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'news_analysis_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'NAME': 'NewsHeadlinesData',
+        'NAME': DATABASE_INFO['database_name'],
         'ENGINE': 'django.db.backends.mysql',
         'USER': DATABASE_INFO['user'],
         'PASSWORD': DATABASE_INFO['password'],
-        'HOST': '127.0.0.1'
+        'HOST': DATABASE_INFO['host']
     }
 }
 

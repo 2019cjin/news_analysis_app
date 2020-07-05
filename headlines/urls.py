@@ -9,5 +9,9 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('sentiment', views.chart_neg_pos, name = 'sentiment'),
     path('keyword_cloud', views.keyword_cloud, name = 'keyword_cloud'),
-    path('keyword/<str:word>/', views.headline_display, name = 'keyword')
+    path('keyword/<str:word>/', views.headline_display, name = 'keyword'),
+    path('news_websites/', views.news_websites, name='news_websites'),
+    path('about/', views.about, name='about'),
+    path('process/', views.process, name='process')
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
+
