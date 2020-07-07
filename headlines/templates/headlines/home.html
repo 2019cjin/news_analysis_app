@@ -1,59 +1,40 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <title>Home Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+      .jumbotron {
+        background-image: url("{% static 'headlines/website_header_image.PNG' %}");
+        background-size: auto 100%;
+
+        text-shadow:0 0 10px gold, 0 0 20px gold, 0 0 30px #fff, 0 0 40px #fff, 0 0 50px #fff, 0 0 60px #fff, 0 0 70px #fff;
+        color: black;
+        font-weight: 100;
+      }
+    </style>
   </head>
 
   <body>
     
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="{% url 'headlines:index' %}">Newslytics</a>
-        </div>
-    
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li><a href="{% url 'headlines:process' %}">Our Process <span class="sr-only">(current)</span></a></li>
-            <li><a href="{% url 'headlines:about' %}">About Us</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="{% url 'headlines:sentiment' %}">Sentiment Analysis Comparison</a></li>
-                <li><a href="{% url 'headlines:keyword_cloud' %}">Hot Topics Word Cloud</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Search Topics</a></li>
-              </ul>
-            </li>
-          </ul>
-          <form class="navbar-form navbar-left">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
+    <div id = "navigation-bar">
+      {% include 'headlines/navigation_bar.html' %}
+    </div>
+
     <div class="container-fluid">
       <div class="jumbotron text-center">
         <h2>Welcome to Newslytics</h2>
         <p>Check out our tools to analyze media headlines!</p>
       </div>
-
+      
       <div class="row">
         <div class="col-sm-6">
           <div class="well">
@@ -61,7 +42,7 @@
               <div class="card-body">
                 <h5 class="card-title"><b>Sentiment Analysis Charts</b></h5>
                 <p class="card-text">Bar graphs that compare sentiment values of headlines from multiple news sources</p>
-                <a href="./sentiment" class="btn btn-primary">Go somewhere</a>
+                <a href="{% url 'headlines:sentiment' %}" class="btn btn-primary">Go somewhere</a>
               </div>
             </div>
           </div>
@@ -72,7 +53,7 @@
               <div class="card-body">
                 <h5 class="card-title"><b>Hot Topics Word Cloud</b></h5>
                 <p class="card-text">Word cloud that shows most popular topics in new headlines from multiple sources</p>
-                <a href="./keyword_cloud" class="btn btn-primary">Go somewhere</a>
+                <a href="{% url 'headlines:keyword_cloud' %}" class="btn btn-primary">Go somewhere</a>
               </div>
             </div>
           </div>
@@ -83,7 +64,7 @@
               <div class="card-body">
                 <h5 class="card-title"><b>Search Headlines</b></h5>
                 <p class="card-text">Search engine that returns list of headlines related to a given topic</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a href="{% url 'headlines:keyword' 'NONE' %}" class="btn btn-primary">Go somewhere</a>
               </div>
             </div>
           </div>
