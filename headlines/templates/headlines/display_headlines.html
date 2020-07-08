@@ -10,33 +10,97 @@
 	<script src="{% static 'headlines/autocomplete_generator.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+    	#myInput{
+    		width: 500px;
+    	}
+    </style>
 </head>
 <body>
 	<div id = "navigation-bar">
       {% include 'headlines/navigation_bar.html' %}
     </div>
+	
+	<div class="container">
 
-	<div class="autocomplete">
-		<input type="text" id="keywordBox" placeholder="Type ALL for all headlines">
-		<button id="button1">Submit</button>
+		<div id = "controls">
+			<input class="form-control" id="myInput" type="text" placeholder="Search.." value = "{{kw}}">
+			<!-- Example single danger button -->
+			<div class="btn-group">
+				<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Action
+				</button>
+				<ul class="dropdown-menu" id="news-source-dropdown">
+					{% for ns in newssources%}
+						<li><a class="dropdown-item">{{ns}}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+
+
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Headline</th>
+					<th scope="col">News Source</th>
+				</tr>	
+			</thead>
+			<tbody id = "table-headlines">
+				{% for datum in headlines %}
+					<tr>
+						<th scope="row">{{forloop.counter}}</th>
+						<td>{{datum.content}}</td>
+						<td id = "news-source-column">{{datum.newssourceid.name}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
-	<ol>
-		{% for datum in headlines %}
-			<li>{{datum}}</li>
-		{% endfor %}
-	</ol>
+	
+
 	<script>
-		var button1 = document.getElementById("button1");
-		var textbox = document.getElementById("keywordBox");
-		autocomplete(textbox, {{kws|safe}});
+		$(document).ready(function (){
 
-		var url =  "{% url 'headlines:keyword' 'foobar' %}";
-		button1.addEventListener("click", function(){open_url_html(textbox, url)});
+			$("#myInput").on("keyup", function(){
+				var val1 = $(this).val() + " ";
+				var val2 = " " + $(this).val();
+				$("#table-headlines tr").filter( function(){
+					$(this).toggle($(this).text().indexOf(val1) > -1 ||
+									$(this).text().indexOf(val2)>-1)
+				});
+			});
 
-		function open_url_html(textbox, url_ref) {
-			//alert("From html file!")
-			open_url(textbox, url_ref);
-		}
+			$(".dropdown-item").on("click", function(){
+				var news_source = $(this).text();
+				$("#table-headlines tr").filter( function (){
+					$(this).toggle( $(this).children("#news-source-column").text() == news_source);
+				});
+			});
+
+			$("#myInput").trigger("keyup");
+		});
+		// Basic example
+		// $(document).ready(function () {
+		// 	$('#table-headlines').DataTable({
+		// 		"searching": true // false to disable search (or any other option)
+		// 	});
+		// 	$('.dataTables_length').addClass('bs-select');
+		// });
+
+		// var button1 = document.getElementById("button1");
+		// var textbox = document.getElementById("keywordBox");
+		// autocomplete(textbox, {{kws|safe}});
+
+		// var url =  "{% url 'headlines:keyword' 'foobar' %}";
+		// button1.addEventListener("click", function(){open_url_html(textbox, url)});
+
+		// function open_url_html(textbox, url_ref) {
+		// 	//alert("From html file!")
+		// 	open_url(textbox, url_ref);
+		// }
 	</script>
 </body>
 </html>

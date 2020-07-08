@@ -7,6 +7,7 @@ from django.http import HttpResponse, Http404
 
 from .sentiment_extractor import SentimentExtractor
 from .keyword_retriever import KeywordRetriever
+from .headline_retriever import HeadlineRetriever
 
 def chart_neg_pos(request):
 	sent_extractor = SentimentExtractor()
@@ -25,17 +26,14 @@ def keyword_cloud(request):
 
 def headline_display(request, word):
 	try:
-		headlines, keywords = [], []
+		hr = HeadlineRetriever()
+		headlines = hr.get_headlines()
+		news_sources = ["abc", "nbc", "fox", "reuters"]
 
-		if word != 'NONE':
-			keyword_retriever = KeywordRetriever()
-			inp = None if word=="ALL" else word
-			headlines = keyword_retriever.get_headlines(kw = inp)
-			keywords = keyword_retriever.get_keywords()
 	except:
 		raise Http404("Keyword does not exist!")
 	
-	context = {'kw': word, 'headlines':headlines, 'kws': keywords}
+	context = {'kw': word, 'headlines': headlines, 'newssources': news_sources}
 	return render(request, 'headlines/display_headlines.html', context)
 
 
