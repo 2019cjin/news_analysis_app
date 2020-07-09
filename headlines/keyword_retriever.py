@@ -22,13 +22,17 @@ class KeywordRetriever(object):
 		"""Returns a list of keywords"""
 		return list(self.keyword_headlines().keys())
 		
-	def keyword_frequencies(self):
+	def keyword_frequencies(self, limit = None):
 		"""Returns a list of lists [word, number of headlines]"""
 		key_head = self.keyword_headlines()
 
 		freq_list = []
 		for keyword in key_head:
-			freq_list.append([keyword, len(key_head[keyword])])
+			numHeadlines = len(key_head[keyword])
+			if limit:
+				if numHeadlines > limit:
+					numHeadlines = limit
+			freq_list.append([keyword, numHeadlines])
 
 		return freq_list
 

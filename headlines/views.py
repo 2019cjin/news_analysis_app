@@ -16,11 +16,12 @@ def chart_neg_pos(request):
 	mylabels = info[0]
 	mydata = info[1]
 	
+	print(mydata)
 	return render(request, 'headlines/chart_neg_pos.html', {'mylabels':mylabels, 'mydata':mydata})
 
 def keyword_cloud(request):
 	keyword_retriever = KeywordRetriever()
-	info = keyword_retriever.keyword_frequencies()
+	info = keyword_retriever.keyword_frequencies(limit = 300)
 
 	return render(request, 'headlines/keyword_cloud.html', {'mydata':info})
 
@@ -31,6 +32,7 @@ def headline_display(request, word):
 		news_sources = ["abc", "nbc", "fox", "reuters"]
 		months = ['January', 'February', 'March', 'April', 'May', 'June', 
 				  'July', 'August', 'September', 'October', 'November', 'December']
+		days = list(range(1, 32))
 
 	except:
 		raise Http404("Keyword does not exist!")
@@ -38,9 +40,9 @@ def headline_display(request, word):
 	context = {'kw': word, 
 				'headlines': headlines, 
 				'newssources': news_sources,
-				'months': months}
+				'months': months,
+				'days': days}
 	return render(request, 'headlines/display_headlines.html', context)
-
 
 def index(request):
 	template = loader.get_template('headlines/home.html')

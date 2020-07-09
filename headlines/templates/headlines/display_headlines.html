@@ -15,8 +15,10 @@
     	#myInput{
     		width: 500px;
     	}
-    	.control{
-    		overflow-x: auto;
+    	.scrollable-menu{
+    		height: auto;
+    		max-height: 200px;
+    		overflow-x: hidden;
     	}
     </style>
 </head>
@@ -54,7 +56,7 @@
 					&#9660
 				</button>
 
-				<ul class="dropdown-menu" id = "month-dropdown">
+				<ul class="dropdown-menu scrollable-menu" id = "month-dropdown">
 					<li><a class="dropdown-item">ANY</a></li>
 					<li role = "separator" class="divider"></li>
 					{% for month in months %}
@@ -63,7 +65,20 @@
 				</ul>
 			</div>
 
-			
+			<div class="btn-group">
+				<label class="btn btn-success" id="day-label">Day</label>
+				<button id="day-button" type="button" class="btn btn-success dropdown-toggle" data-toggle = "dropdown" aria-haspopup = "true" aria-expanded = "false">
+					&#9660
+				</button>
+
+				<ul class="dropdown-menu scrollable-menu" id = "day-dropdown">
+					<li><a class="dropdown-item">ANY</a></li>
+					<li role = "separator" class="divider"></li>
+					{% for day in days%}
+						<li><a class="dropdown-item">{{day}}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
 
         </div>
 
@@ -82,7 +97,7 @@
 						<th scope="row">{{forloop.counter}}</th>
 						<td>{{datum.content}}</td>
 						<td id = "news-source-column">{{datum.newssourceid.name}}</td>
-						<td id = "month-column">{{datum.datetime.date}}</td>
+						<td id = "date-column">{{datum.datetime.date}}</td>
 					</tr>
 				{% endfor %}
 			</tbody>
@@ -93,52 +108,83 @@
 	<script>
 		$(document).ready(function (){
 
-			$("#myInput").on("keyup", function(){
-				var val1 = $(this).val();
-				$("#table-headlines tr").filter( function(){
-					$(this).toggle($(this).text().indexOf(val1) > -1);
-				});
-			});
+			function containsText(match, sentence) {
+				if (sentence.indexOf(match)>-1) {
+					return true;
+				}
+				no_punct_sentence = sentence.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+				if (no_punct_sentence.indexOf(match)>-1){
+					return true;
+				}
+				return false; 
+			}
 
-			$("#news-source-dropdown .dropdown-item").on("click", function(){
-				var news_source = $(this).text();
-				var word_search = $("#myInput").val();
-				var month = $("#month-label").text();
+			function matchColumn(match, start, any, col) {
+				return match == start || match == any || match == col;
+			}
 
-				$("#table-headlines tr").filter( function (){
-					$(this).toggle( 
-						(news_source == "ANY" || $(this).children("#news-source-column").text()== news_source) && 
-						(month == "Month" || $(this).children("#month-column").text().indexOf(month)>-1) && $(this).text().indexOf(word_search)>-1);
-				});
+			function parseDate(dateStr) {
+				var no_dateStr = dateStr.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+				return no_dateStr.split(" ");
+			}
 
-				var label_text = news_source;
-				if (news_source=="ANY") {
-					label_text = "Select News Source";
+			function filter_fn(word_search, news_source, month, day) {
+				$("#table-headlines tr").filter(function () {
+			 		$(this).toggle(
+			 			matchColumn(news_source, "Select News Source", "ANY", $(this).children("#news-source-column").text()) &&
+			 			matchColumn(month, "Month", "ANY", parseDate($(this).children("#date-column").text())[0]) && 
+			 			matchColumn(day, "Day", "ANY", parseDate($(this).children("#date-column").text())[1]) && 
+			 			containsText(word_search, $(this).text()));
+			 	});
+			}
+
+			function change_button_label(id, new_label, old_label) {
+				var label_text = new_label;
+				if (label_text=="ANY") {
+					label_text = old_label;
 				} 
-				
-				$("#news-source-label").text(label_text);
+
+				$(id).text(label_text);
+			}
+			
+			$("#myInput").on("keyup", function () {
+				var word_search = $(this).val();
+				var news_source = $("#news-source-label").text();
+				var month = $("#month-label").text();
+				var day = $("#day-label").text();
+
+				filter_fn(word_search, news_source, month, day);
 			});
+
+			$("#news-source-dropdown .dropdown-item").on("click", function () {
+				var word_search = $("#myInput").val();
+				var news_source = $(this).text();
+				var month = $("#month-label").text();
+				var day = $("#day-label").text();
+
+				filter_fn(word_search, news_source, month, day);
+				change_button_label("#news-source-label", news_source, "Select News Source");
+			})
 
 			$("#month-dropdown .dropdown-item").on("click", function () {
-				var month = $(this).text();
 				var word_search = $("#myInput").val();
 				var news_source = $("#news-source-label").text();
+				var month = $(this).text();
+				var day = $("#day-label").text();
 
-				$("#table-headlines tr").filter(function () {
-					$(this).toggle(
-						(news_source == "Select News Source" || $(this).children("#news-source-column").text() == news_source) &&
-						(month == "ANY" || $(this).children("#month-column").text().indexOf(month) > -1) && $(this).text().indexOf(word_search)>-1);
-				});
-
-				var label_text = month;
-				if (month == "ANY"){
-					label_text = "Month";
-				}
-
-				$("#month-label").text(label_text)
+				filter_fn(word_search, news_source, month, day);
+				change_button_label("#month-label", month, "Month");
 			});
 
+			$("#day-dropdown .dropdown-item").on("click", function () {
+				var word_search = $("#myInput").val();
+				var news_source = $("#news-source-label").text();
+				var month = $("#month-label").text();
+				var day = $(this).text();
 
+				filter_fn(word_search, news_source, month, day);
+				change_button_label("#day-label", day, "Day");
+			});
 
 			$("#myInput").trigger("keyup");
 		});
