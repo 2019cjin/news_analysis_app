@@ -14,6 +14,9 @@
     	.header-style{
     		text-align: center;
     	}
+    	#button-change{
+    		margin: 10px;
+    	}
     </style>
 </head>
 <body>
@@ -22,13 +25,22 @@
       {% include 'headlines/navigation_bar.html' %}
     </div>
 
-    <div class="container header-style">
-    	<h1>Keyword Cloud</h1>
-		<p id = "keywordtext"></p>
+    <div class="container">
+    	<div class="header-style">
+    		<h1>Keyword Cloud</h1>
+    		<p id = "keywordtext"></p>
+    	</div>
+    	<button class="btn btn-primary" onclick="go_to_list()" id="button-change">Go to List</button>
 		<canvas id="cloud1" width="1200" height="700"></canvas>
     </div>
 	
 	<script>
+
+		function go_to_list(argument) {
+			var url = "{% url 'headlines:keyword_list' %}"
+			window.location.href = url;
+		}
+
 		WordCloud(document.getElementById('cloud1'), 
 			{list: {{mydata|safe}},
 			 gridSize: 8,

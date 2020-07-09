@@ -21,8 +21,7 @@ def chart_neg_pos(request):
 
 def keyword_cloud(request):
 	keyword_retriever = KeywordRetriever()
-	info = keyword_retriever.keyword_frequencies(limit = 300)
-
+	info = keyword_retriever.keyword_frequencies(limit = 150)
 	return render(request, 'headlines/keyword_cloud.html', {'mydata':info})
 
 def headline_display(request, word):
@@ -43,6 +42,13 @@ def headline_display(request, word):
 				'months': months,
 				'days': days}
 	return render(request, 'headlines/display_headlines.html', context)
+
+def keyword_display(request):
+	kr = KeywordRetriever()
+	info = kr.keyword_frequencies()
+	context = {"kws": info}
+
+	return render(request, 'headlines/keyword_list.html', context)
 
 def index(request):
 	template = loader.get_template('headlines/home.html')

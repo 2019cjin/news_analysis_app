@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Keyword Table</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+	<!-- Data Table Source Code -->
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+</head>
+<body>
+	<div id = "navigation-bar">
+      {% include 'headlines/navigation_bar.html' %}
+    </div>
+
+    <div class="container">
+    	<h1 style="text-align: center;">Keyword List</h1>
+    	
+    	<button class="btn btn-primary" id="button-change" style="margin: 10px;">Go to WordCloud</button>
+
+    	<table class="table table-striped table-bordered" id="keyword_table">
+    		<thead>
+    			<th scope="col">#</th>
+    			<th scope="col">Keyword</th>
+    			<th scope="col">Number of Headlines</th>
+    		</thead>
+    		<tbody>
+    			{% for kw in kws%}
+    				<tr>
+    					<th>{{forloop.counter}}</th>
+    					<td>{{kw.0}}</td>
+    					<td>{{kw.1}}</td>
+    				</tr>
+    			{% endfor %}
+    		</tbody>
+    	</table>
+    </div>
+
+    <script type="text/javascript">
+    	$(document).ready(function () {
+    		$("#keyword_table").DataTable();
+    		$("#button-change").on("click", function(){
+    			var url = "{% url 'headlines:keyword_cloud' %}"
+    			window.location.href = url; 
+    		});
+    	});
+    </script>
+</body>
+</html>
