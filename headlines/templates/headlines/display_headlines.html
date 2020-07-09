@@ -15,6 +15,9 @@
     	#myInput{
     		width: 500px;
     	}
+    	.control{
+    		overflow-x: auto;
+    	}
     </style>
 </head>
 <body>
@@ -24,21 +27,45 @@
 	
 	<div class="container">
 
-		<div id = "controls">
+		<div class="form-inline">
+
 			<input class="form-control" id="myInput" type="text" placeholder="Search.." value = "{{kw}}">
 			<!-- Example single danger button -->
 			<div class="btn-group">
-				<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Action
+
+				<label class="btn btn-primary" id = "news-source-label">Select News Source</label>
+				
+				<button id = "news-source-button" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					&#9660
 				</button>
+
 				<ul class="dropdown-menu" id="news-source-dropdown">
+					<li><a class="dropdown-item">ANY</a></li>
+					<li role = "separator" class="divider"></li>
 					{% for ns in newssources%}
 						<li><a class="dropdown-item">{{ns}}</a></li>
 					{% endfor %}
 				</ul>
 			</div>
-		</div>
 
+			<div class="btn-group">
+				<label class="btn btn-success" id="month-label">Month</label>
+				<button id="month-button" type="button" class="btn btn-success dropdown-toggle" data-toggle = "dropdown" aria-haspopup = "true" aria-expanded="false">
+					&#9660
+				</button>
+
+				<ul class="dropdown-menu" id = "month-dropdown">
+					<li><a class="dropdown-item">ANY</a></li>
+					<li role = "separator" class="divider"></li>
+					{% for month in months %}
+						<li><a class="dropdown-item">{{month}}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+
+			
+
+        </div>
 
 		<table class="table table-striped table-bordered">
 			<thead>
@@ -46,6 +73,7 @@
 					<th scope="col">#</th>
 					<th scope="col">Headline</th>
 					<th scope="col">News Source</th>
+					<th scope="col">Date</th>
 				</tr>	
 			</thead>
 			<tbody id = "table-headlines">
@@ -54,6 +82,7 @@
 						<th scope="row">{{forloop.counter}}</th>
 						<td>{{datum.content}}</td>
 						<td id = "news-source-column">{{datum.newssourceid.name}}</td>
+						<td id = "month-column">{{datum.datetime.date}}</td>
 					</tr>
 				{% endfor %}
 			</tbody>
@@ -65,42 +94,55 @@
 		$(document).ready(function (){
 
 			$("#myInput").on("keyup", function(){
-				var val1 = $(this).val() + " ";
-				var val2 = " " + $(this).val();
+				var val1 = $(this).val();
 				$("#table-headlines tr").filter( function(){
-					$(this).toggle($(this).text().indexOf(val1) > -1 ||
-									$(this).text().indexOf(val2)>-1)
+					$(this).toggle($(this).text().indexOf(val1) > -1);
 				});
 			});
 
-			$(".dropdown-item").on("click", function(){
+			$("#news-source-dropdown .dropdown-item").on("click", function(){
 				var news_source = $(this).text();
+				var word_search = $("#myInput").val();
+				var month = $("#month-label").text();
+
 				$("#table-headlines tr").filter( function (){
-					$(this).toggle( $(this).children("#news-source-column").text() == news_source);
+					$(this).toggle( 
+						(news_source == "ANY" || $(this).children("#news-source-column").text()== news_source) && 
+						(month == "Month" || $(this).children("#month-column").text().indexOf(month)>-1) && $(this).text().indexOf(word_search)>-1);
 				});
+
+				var label_text = news_source;
+				if (news_source=="ANY") {
+					label_text = "Select News Source";
+				} 
+				
+				$("#news-source-label").text(label_text);
 			});
+
+			$("#month-dropdown .dropdown-item").on("click", function () {
+				var month = $(this).text();
+				var word_search = $("#myInput").val();
+				var news_source = $("#news-source-label").text();
+
+				$("#table-headlines tr").filter(function () {
+					$(this).toggle(
+						(news_source == "Select News Source" || $(this).children("#news-source-column").text() == news_source) &&
+						(month == "ANY" || $(this).children("#month-column").text().indexOf(month) > -1) && $(this).text().indexOf(word_search)>-1);
+				});
+
+				var label_text = month;
+				if (month == "ANY"){
+					label_text = "Month";
+				}
+
+				$("#month-label").text(label_text)
+			});
+
+
 
 			$("#myInput").trigger("keyup");
 		});
-		// Basic example
-		// $(document).ready(function () {
-		// 	$('#table-headlines').DataTable({
-		// 		"searching": true // false to disable search (or any other option)
-		// 	});
-		// 	$('.dataTables_length').addClass('bs-select');
-		// });
 
-		// var button1 = document.getElementById("button1");
-		// var textbox = document.getElementById("keywordBox");
-		// autocomplete(textbox, {{kws|safe}});
-
-		// var url =  "{% url 'headlines:keyword' 'foobar' %}";
-		// button1.addEventListener("click", function(){open_url_html(textbox, url)});
-
-		// function open_url_html(textbox, url_ref) {
-		// 	//alert("From html file!")
-		// 	open_url(textbox, url_ref);
-		// }
 	</script>
 </body>
 </html>

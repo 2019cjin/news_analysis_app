@@ -9,6 +9,12 @@
 	<script src="{% static 'headlines/wordcloud_generator.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+    	.header-style{
+    		text-align: center;
+    	}
+    </style>
 </head>
 <body>
 	
@@ -16,16 +22,21 @@
       {% include 'headlines/navigation_bar.html' %}
     </div>
 
-	<h1>Keyword Cloud</h1>
-	<p id = "keywordtext"></p>
-	<canvas id="cloud1" width="1200" height="700"></canvas>
+    <div class="container header-style">
+    	<h1>Keyword Cloud</h1>
+		<p id = "keywordtext"></p>
+		<canvas id="cloud1" width="1200" height="700"></canvas>
+    </div>
+	
 	<script>
 		WordCloud(document.getElementById('cloud1'), 
 			{list: {{mydata|safe}},
 			 gridSize: 8,
 			 shape: 'square',
 			 hover: hover_over,
-			 click: click_trigger
+			 click: click_trigger,
+			 color: "random-light",
+			 backgroundColor: "black"
 			});
 
 		function click_trigger(item, dimension, event) {
@@ -35,7 +46,7 @@
 
 		function hover_over(item, dimension, event){
 
-			document.getElementById("keywordtext").innerHTML = "Keyword is " + item[0];
+			document.getElementById("keywordtext").innerHTML = "Keyword is " + item[0]; 
 		}
 	</script>
 </body>

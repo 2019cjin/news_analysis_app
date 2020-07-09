@@ -29,11 +29,16 @@ def headline_display(request, word):
 		hr = HeadlineRetriever()
 		headlines = hr.get_headlines()
 		news_sources = ["abc", "nbc", "fox", "reuters"]
+		months = ['January', 'February', 'March', 'April', 'May', 'June', 
+				  'July', 'August', 'September', 'October', 'November', 'December']
 
 	except:
 		raise Http404("Keyword does not exist!")
 	
-	context = {'kw': word, 'headlines': headlines, 'newssources': news_sources}
+	context = {'kw': word, 
+				'headlines': headlines, 
+				'newssources': news_sources,
+				'months': months}
 	return render(request, 'headlines/display_headlines.html', context)
 
 
