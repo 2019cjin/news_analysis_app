@@ -19,10 +19,10 @@
 
 	<h1 class = "text-center">Sentiment Analysis</h1>
 	<div class = "text-center">
-		<button id="button1">Generate Graph</button>
+		<button id="button1" class="btn btn-primary">Generate Graph</button>
 		<div>
 			{% for key in mydata%}
-				<input type="checkbox" id = "checkbox_{{key}}" name="{{key}}">
+				<input type="checkbox" id = "checkbox_{{key}}" name="{{key}}" class="form-check">
 				<label for="{{key}}">{{key}}</label>
 			{% endfor %}
 		</div>
