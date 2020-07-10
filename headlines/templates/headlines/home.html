@@ -13,11 +13,11 @@
 
     <style type="text/css">
       .jumbotron {
-        background-image: url("{% static 'headlines/website_header_image.PNG' %}");
+        background-image: linear-gradient(to bottom, rgba(255,255,255,0.9) 0%,rgba(255,255,255,0.9) 100%), url("{% static 'headlines/website_header_image.PNG' %}");
         background-size: auto 100%;
       }
-      mark{
-        background-color: white;
+      h1 {
+        text-shadow: 0 0 20px #337ab7;
       }
     </style>
   </head>
@@ -30,40 +30,43 @@
 
     <div class="container-fluid">
       <div class="jumbotron text-center">
-        <h2><mark>Welcome to Newslytics</mark></h2>
-        <p><mark>Check out our tools to analyze media headlines!</mark></p>
+        <h1>Welcome to Newslytics</h1>
+        <h3>Check out our tools to analyze media headlines!</h3>
       </div>
       
       <div class="row">
         <div class="col-sm-6">
-          <div class="well">
+          <div class="well" style="background-color: #f7b783;">
             <div class="card">
-              <div class="card-body">
-                <h5 class="card-title"><b>Sentiment Analysis Charts</b></h5>
+              <img src="https://img.icons8.com/android/64/000000/bar-chart.png" style="margin-left:43%;"/>
+              <div class="card-body text-center">
+                <h2 class="card-title"><b>Sentiment Analysis Charts</b></h2>
                 <p class="card-text">Bar graphs that compare sentiment values of headlines from multiple news sources</p>
-                <a href="{% url 'headlines:sentiment' %}" class="btn btn-primary">Go somewhere</a>
+                <a href="{% url 'headlines:sentiment' %}" class="btn btn-primary">See Charts</a>
               </div>
             </div>
           </div>
         </div>
         <div class="col-sm-6">
-          <div class="well">
+          <div class="well" style="background-color: #83c7f7;">
             <div class="card">
-              <div class="card-body">
-                <h5 class="card-title"><b>Hot Topics Word Cloud</b></h5>
+              <img src="https://img.icons8.com/wired/64/000000/cloud.png" style="margin-left:43%;"/>
+              <div class="card-body text-center">
+                <h2 class="card-title"><b>Hot Topics Word Cloud</b></h2>
                 <p class="card-text">Word cloud that shows most popular topics in new headlines from multiple sources</p>
-                <a href="{% url 'headlines:keyword_cloud' %}" class="btn btn-primary">Go somewhere</a>
+                <a href="{% url 'headlines:keyword_cloud' %}" class="btn btn-primary">See Word Cloud</a>
               </div>
             </div>
           </div>
         </div>
         <div class="col-sm-6">
-          <div class="well">
+          <div class="well" style="background-color: #d8f582;">
             <div class="card">
-              <div class="card-body">
-                <h5 class="card-title"><b>Search Headlines</b></h5>
+              <img src="https://img.icons8.com/dotty/80/000000/search-bar.png" style="margin-left:43%;"/>
+              <div class="card-body text-center">
+                <h2 class="card-title"><b>Search Headlines</b></h2>
                 <p class="card-text">Search engine that returns list of headlines related to a given topic</p>
-                <a href="{% url 'headlines:headline_filter' 'NONE' %}" class="btn btn-primary">Go somewhere</a>
+                <a href="{% url 'headlines:headline_filter' 'NONE' %}" class="btn btn-primary">See Search Engine</a>
               </div>
             </div>
           </div>
