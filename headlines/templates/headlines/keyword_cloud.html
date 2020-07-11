@@ -11,6 +11,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <style type="text/css">
+    	.page-header{
+    		text-align: center;
+    	}
     	.header-style{
     		text-align: center;
     	}
@@ -26,11 +29,15 @@
     </div>
 
     <div class="container">
+    	<div class="page-header">
+            <h1>Keyword Cloud</h1>
+            <br>
+            <p>Hover over word in cloud to see keyword. To see total list of keywords click on the button below. To see all headlines for a given keyword, click on the keyword in the cloud.</p>
+        </div>
     	<div class="header-style">
-    		<h1>Keyword Cloud</h1>
-    		<p id = "keywordtext"></p>
+    		<button class="btn btn-primary" onclick="go_to_list()" id="button-change">Go to List</button>
+    		<h3 id = "keywordtext" style="display: inline-block;"></h3>
     	</div>
-    	<button class="btn btn-primary" onclick="go_to_list()" id="button-change">Go to List</button>
 		<canvas id="cloud1" width="1200" height="700"></canvas>
     </div>
 	
@@ -58,8 +65,12 @@
 
 		function hover_over(item, dimension, event){
 
-			document.getElementById("keywordtext").innerHTML = "Keyword is " + item[0]; 
+			document.getElementById("keywordtext").innerHTML = "Current keyword is " + item[0]; 
 		}
 	</script>
+
+	<br>
+	<br>
+	<p class = "text-center">*Note: Data based on headlines retrieved since June 24, 2020.</p>
 </body>
 </html>

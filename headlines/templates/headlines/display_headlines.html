@@ -83,6 +83,13 @@
 				</ul>
 			</div>
 
+			
+			<label class="col-2 col-form-label" id="startDateLabel">Start Date</label>
+			<input class="form-inline form-control" type="date" value="2020-06-24" id = "startDateInput">
+
+			<label class="col-2 col-form-label" id="endDateInput">End Date</label>
+			<input class="form-inline form-control" type="date" value="2020-06-24" id = "endDateInput">
+
         </div>
 
 		<table class="table table-striped table-bordered">
@@ -131,12 +138,22 @@
 				return no_dateStr.split(" ");
 			}
 
-			function filter_fn(word_search, news_source, month, day) {
+			function dateInRange(dateInput, startDate, endDate) {
+				if (dateInput > startDate && dateInput < endDate){
+					return true;
+				}
+				return false;
+			}
+
+			function filter_fn(word_search, news_source, start_date, end_date) {
 				$("#table-headlines tr").filter(function () {
+					/*var date = "";
+					var month = parseDate($(this).children("#date-column").text())[0];
+					var day = parseDate($(this).children("#date-column").text())[1];
+					var year = parseDate($(this).children("#date-column").text())[2];
+					var datetime = year + "-" + month "-" + day;*/
 			 		$(this).toggle(
-			 			matchColumn(news_source, "Select News Source", "ANY", $(this).children("#news-source-column").text()) &&
-			 			matchColumn(month, "Month", "ANY", parseDate($(this).children("#date-column").text())[0]) && 
-			 			matchColumn(day, "Day", "ANY", parseDate($(this).children("#date-column").text())[1]) && 
+			 			matchColumn(news_source, "Select News Source", "ANY", $(this).children("#news-source-column").text()) && 
 			 			containsText(word_search, $(this).text()));
 			 	});
 			}
@@ -153,41 +170,24 @@
 			$("#myInput").on("keyup", function () {
 				var word_search = $(this).val();
 				var news_source = $("#news-source-label").text();
-				var month = $("#month-label").text();
-				var day = $("#day-label").text();
+				var start_date = $("#startDateInput").val();
+				var end_date = $("#endDateInput").val();
 
-				filter_fn(word_search, news_source, month, day);
+				filter_fn(word_search, news_source, month, start_date, end_date);
 			});
 
 			$("#news-source-dropdown .dropdown-item").on("click", function () {
 				var word_search = $("#myInput").val();
 				var news_source = $(this).text();
-				var month = $("#month-label").text();
-				var day = $("#day-label").text();
+				var start_date = $("#startDateInput").val();
+				var end_date = $("#endDateInput").val();
+				//var month = $("#month-label").text();
+				//var day = $("#day-label").text();
 
-				filter_fn(word_search, news_source, month, day);
+				filter_fn(word_search, news_source, month, start_date, end_date);
 				change_button_label("#news-source-label", news_source, "Select News Source");
 			});
 
-			$("#month-dropdown .dropdown-item").on("click", function () {
-				var word_search = $("#myInput").val();
-				var news_source = $("#news-source-label").text();
-				var month = $(this).text();
-				var day = $("#day-label").text();
-
-				filter_fn(word_search, news_source, month, day);
-				change_button_label("#month-label", month, "Month");
-			});
-
-			$("#day-dropdown .dropdown-item").on("click", function () {
-				var word_search = $("#myInput").val();
-				var news_source = $("#news-source-label").text();
-				var month = $("#month-label").text();
-				var day = $(this).text();
-
-				filter_fn(word_search, news_source, month, day);
-				change_button_label("#day-label", day, "Day");
-			});
 
 			$("#myInput").trigger("keyup");
 		});

@@ -21,11 +21,11 @@ python manage.py runserver
 
 ## Resources:
 
-## Django
+### Django
 1. https://docs.djangoproject.com/en/3.0/intro/tutorial01/
 2. https://docs.djangoproject.com/en/3.0/howto/legacy-databases/
 
-## Javascript Files Used:
+### Javascript Files Used:
 1. chartjs: https://www.chartjs.org/docs/latest/
 2. wordcloud resource: https://github.com/timdream/wordcloud2.js
 
@@ -34,3 +34,6 @@ python manage.py runserver
 	1. https://getbootstrap.com/docs/3.4/components/#navbar
 	2. https://simpleisbetterthancomplex.com/tutorial/2018/08/13/how-to-use-bootstrap-4-forms-with-django.html
 2. icons: https://icons8.com/icons/set/bar-chart
+
+### Resources for Deploying App:
+1. Heroku: https://gist.github.com/randallreedjr/aa89e069371d07371882eea2df15fb4d

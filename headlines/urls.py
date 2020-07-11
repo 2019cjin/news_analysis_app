@@ -7,7 +7,8 @@ from . import views
 app_name = 'headlines'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('sentiment', views.chart_neg_pos, name = 'sentiment'),
+    path('sentiment', views.chart_display, name = 'sentiment'),
+    path('percent_news', views.chart_neg_pos, name = "percent_news"),
     path('keyword_cloud', views.keyword_cloud, name = 'keyword_cloud'),
     path('headline_filter/<str:word>/', views.headline_display, name = 'headline_filter'),
     path('keyword_list', views.keyword_display, name = "keyword_list"),

@@ -9,14 +9,15 @@ from .sentiment_extractor import SentimentExtractor
 from .keyword_retriever import KeywordRetriever
 from .headline_retriever import HeadlineRetriever
 
+def chart_display(request):
+	return render(request, 'headlines/chart_display.html')
+
 def chart_neg_pos(request):
 	sent_extractor = SentimentExtractor()
 	info = sent_extractor.get_all_news_sources()
 
 	mylabels = info[0]
 	mydata = info[1]
-	
-	print(mydata)
 	return render(request, 'headlines/chart_neg_pos.html', {'mylabels':mylabels, 'mydata':mydata})
 
 def keyword_cloud(request):
