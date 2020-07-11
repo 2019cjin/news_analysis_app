@@ -30,6 +30,9 @@
       {% include 'headlines/navigation_bar.html' %}
     </div>
 	
+	<p id="Test"></p>
+	<p id = "Test2"></p>
+	<p id = "Test3"></p>
 	<div class="container">
 
 		<div class="form-inline">
@@ -130,6 +133,7 @@
 			}
 
 			function matchColumn(match, start, any, col) {
+				$("#Test2").text(match + " " + col);
 				return match == start || match == any || match == col;
 			}
 
@@ -147,11 +151,7 @@
 
 			function filter_fn(word_search, news_source, start_date, end_date) {
 				$("#table-headlines tr").filter(function () {
-					/*var date = "";
-					var month = parseDate($(this).children("#date-column").text())[0];
-					var day = parseDate($(this).children("#date-column").text())[1];
-					var year = parseDate($(this).children("#date-column").text())[2];
-					var datetime = year + "-" + month "-" + day;*/
+
 			 		$(this).toggle(
 			 			matchColumn(news_source, "Select News Source", "ANY", $(this).children("#news-source-column").text()) && 
 			 			containsText(word_search, $(this).text()));
@@ -172,6 +172,8 @@
 				var news_source = $("#news-source-label").text();
 				var start_date = $("#startDateInput").val();
 				var end_date = $("#endDateInput").val();
+
+				$("#Test").text(word_search + " " + news_source + " " + start_date + " " + end_date);
 
 				filter_fn(word_search, news_source, month, start_date, end_date);
 			});
