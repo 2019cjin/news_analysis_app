@@ -26,7 +26,7 @@ python manage.py runserver
 2. https://docs.djangoproject.com/en/3.0/howto/legacy-databases/
 
 ### Javascript Files Used:
-1. chartjs: https://www.chartjs.org/docs/latest/
+1. plotly: https://plotly.com/javascript
 2. wordcloud resource: https://github.com/timdream/wordcloud2.js
 
 ### Frontend Styling Resources:
