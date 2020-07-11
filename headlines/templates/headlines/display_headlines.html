@@ -16,7 +16,7 @@
 
     <style type="text/css">
     	#myInput{
-    		width: 500px;
+    		width: 300px;
     	}
     	.scrollable-menu{
     		height: auto;
@@ -56,7 +56,7 @@
 				</ul>
 			</div>
 
-			<div class="btn-group">
+			<!-- <div class="btn-group">
 				<label class="btn btn-success" id="month-label">Month</label>
 				<button id="month-button" type="button" class="btn btn-success dropdown-toggle" data-toggle = "dropdown" aria-haspopup = "true" aria-expanded="false">
 					&#9660
@@ -85,12 +85,12 @@
 					{% endfor %}
 				</ul>
 			</div>
-
+ -->
 			
 			<label class="col-2 col-form-label" id="startDateLabel">Start Date</label>
 			<input class="form-inline form-control" type="date" value="2020-06-24" id = "startDateInput">
 
-			<label class="col-2 col-form-label" id="endDateInput">End Date</label>
+			<label class="col-2 col-form-label" id="endDateLabel">End Date</label>
 			<input class="form-inline form-control" type="date" value="2020-06-24" id = "endDateInput">
 
         </div>
@@ -110,7 +110,7 @@
 						<th scope="row">{{forloop.counter}}</th>
 						<td>{{datum.content}}</td>
 						<td id = "news-source-column">{{datum.newssourceid.name}}</td>
-						<td id = "date-column">{{datum.datetime.date}}</td>
+						<td id = "date-column">{{datum.datetime|date:'Y-m-d'}}</td>
 					</tr>
 				{% endfor %}
 			</tbody>
@@ -133,7 +133,6 @@
 			}
 
 			function matchColumn(match, start, any, col) {
-				$("#Test2").text(match + " " + col);
 				return match == start || match == any || match == col;
 			}
 
@@ -143,7 +142,8 @@
 			}
 
 			function dateInRange(dateInput, startDate, endDate) {
-				if (dateInput > startDate && dateInput < endDate){
+				//$("#Test").text(dateInput + "start: " + startDate + "end: " + endDate);
+				if (dateInput >= startDate && dateInput <= endDate){
 					return true;
 				}
 				return false;
@@ -154,6 +154,7 @@
 
 			 		$(this).toggle(
 			 			matchColumn(news_source, "Select News Source", "ANY", $(this).children("#news-source-column").text()) && 
+			 			dateInRange($(this).children("#date-column").text(), start_date, end_date) && 
 			 			containsText(word_search, $(this).text()));
 			 	});
 			}
@@ -173,9 +174,7 @@
 				var start_date = $("#startDateInput").val();
 				var end_date = $("#endDateInput").val();
 
-				$("#Test").text(word_search + " " + news_source + " " + start_date + " " + end_date);
-
-				filter_fn(word_search, news_source, month, start_date, end_date);
+				filter_fn(word_search, news_source, start_date, end_date);
 			});
 
 			$("#news-source-dropdown .dropdown-item").on("click", function () {
@@ -183,10 +182,8 @@
 				var news_source = $(this).text();
 				var start_date = $("#startDateInput").val();
 				var end_date = $("#endDateInput").val();
-				//var month = $("#month-label").text();
-				//var day = $("#day-label").text();
 
-				filter_fn(word_search, news_source, month, start_date, end_date);
+				filter_fn(word_search, news_source, start_date, end_date);
 				change_button_label("#news-source-label", news_source, "Select News Source");
 			});
 
