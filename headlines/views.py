@@ -10,15 +10,24 @@ from .keyword_retriever import KeywordRetriever
 from .headline_retriever import HeadlineRetriever
 
 def chart_display(request):
-	return render(request, 'headlines/chart_display.html')
-
-def chart_neg_pos(request):
 	sent_extractor = SentimentExtractor()
 	info = sent_extractor.get_all_news_sources()
 
 	mylabels = info[0]
 	mydata = info[1]
-	return render(request, 'headlines/chart_neg_pos.html', {'mylabels':mylabels, 'mydata':mydata})
+	vader_data = sent_extractor.get_all_news_source_vader_values()
+
+	context = {'my_perc_labels':mylabels, 
+			   'my_perc_data':mydata,
+			   'my_hist_data':vader_data}
+
+	return render(request, 'headlines/chart_display.html', context)
+
+def chart_neg_pos(request):
+	sent_extractor = SentimentExtractor()
+
+	vader_data = sent_extractor.get_all_news_source_vader_values()
+	return render(request, 'headlines/chart_neg_pos.html', {'my_hist_data':vader_data})
 
 def keyword_cloud(request):
 	keyword_retriever = KeywordRetriever()

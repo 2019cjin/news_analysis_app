@@ -30,10 +30,10 @@
       {% include 'headlines/navigation_bar.html' %}
     </div>
 	
-	<p id="Test"></p>
-	<p id = "Test2"></p>
-	<p id = "Test3"></p>
 	<div class="container">
+		<div class="page-header text-center">
+            <h1>Search Headlines</h1>
+        </div>
 
 		<div class="form-inline">
 
@@ -187,6 +187,25 @@
 				change_button_label("#news-source-label", news_source, "Select News Source");
 			});
 
+			$("#startDateInput").on("click", function (){
+				var word_search = $("#myInput").val();
+				var news_source = $("#news-source-label").text();
+				var start_date = $(this).val();
+				var end_date = $("#endDateInput").val();
+
+				filter_fn(word_search, news_source, start_date, end_date);
+				change_button_label("#news-source-label", news_source, "Select News Source");
+			});
+
+			$("#endDateInput").on("click", function (){
+				var word_search = $("#myInput").val();
+				var news_source = $("#news-source-label").text();
+				var start_date = $("#startDateInput").val();
+				var end_date = $(this).val();
+
+				filter_fn(word_search, news_source, start_date, end_date);
+				change_button_label("#news-source-label", news_source, "Select News Source");
+			});
 
 			$("#myInput").trigger("keyup");
 		});

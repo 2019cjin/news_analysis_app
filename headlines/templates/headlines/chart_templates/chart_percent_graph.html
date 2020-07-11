@@ -1,0 +1,65 @@
+<div>
+	<div class="container">
+		<div class = "text-center">
+			<h1>Percent Bar Graph</h1>
+			<p>These sentiment values are based on all headlines gathered since June 24, 2020.</p>
+			<button id="button2" class="btn btn-primary">Generate Graph</button>
+			<div>
+				{% for key in my_perc_data%}
+					<input type="checkbox" id = "checkbox_{{key}}2" name="{{key}}" class="form-check">
+					<label for="{{key}}">{{key}}</label>
+				{% endfor %}
+			</div>
+		</div>
+		<div id = "chart1"></div>
+	</div>
+	
+	<script>
+		var button1 = document.getElementById('button2');
+		var datasets = {{my_perc_data|safe}};
+
+		button1.onclick = function() {myFunction(datasets)};
+
+		function myFunction(datasets){
+			
+			var colors = ['purple', 'orange', 'green', 'blue'];
+			var bar_inputs = [];
+			var idx = 0;
+
+			for(var key in datasets){
+				var isChecked = document.getElementById('checkbox_' + key+'2').checked
+
+				if (isChecked){
+					var input = {
+						x: {{my_perc_labels|safe}},
+						y: datasets[key],
+						name: key,
+						type: "bar",
+						marker: {
+							 	color: colors[idx],
+							 	line: {
+							 		color: colors[idx],
+							 		width: 1
+							 	}
+							 }
+					};
+					bar_inputs.push(input);
+				}
+
+				idx +=1;
+			}
+
+			var layout = {
+			  font: {
+			  	family: 'Arial'
+			  }, 
+			  barmode: "group", 
+			  title: "", 
+			  xaxis: {title: "Sentiment Classification"}, 
+			  yaxis: {title: "Percent Number of Headlines for Each News Source"}
+			};
+			Plotly.newPlot('chart1', bar_inputs, layout);
+
+		}
+	</script>
+</div>
